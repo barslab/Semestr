@@ -1,0 +1,197 @@
+div.dataTables_wrapper div.dataTables_length select {
+    display: none;
+}
+select.input-sm {
+    display: none;
+}
+.dataTables_info {
+    color: rgba(255,255,255,0);
+    /*display: none;*/
+}
+/*label {*/
+    /*color: rgba(255,255,255, 0);*/
+    /*!*display: none;*!*/
+/*}*/
+h4, .uspeh {
+    color: green;
+}
+h4, .error {
+    color: red;
+}
+.noneback {
+    color: #06C;
+}
+.back {
+    color: #06C;
+    background-color: rgba(255,255,255,0.8);
+}
+.herror {
+    color: red;
+    background-color: rgba(255,255,255,0.8);
+}
+html, body {
+    height: 100%;
+}
+body {
+    padding: 50px 0 0 0;
+}
+.navbar-toggle {
+    float: left;
+    margin-left: 15px;
+}
+@media (min-width: 0) {
+    .navbar-toggle {
+        display: block;
+    }
+}
+@media (min-width: 992px) {
+    body {
+        padding: 0;
+    }
+    .navbar {
+        right: auto;
+        background: none;
+        border: none;
+    }
+}
+button, .button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    cursor: pointer;
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
+    font-weight: normal;
+    line-height: normal;
+    margin: 0 0 1.11111rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.88889rem 1.77778rem 0.94444rem 1.77778rem;
+    font-size: 0.88889rem;
+    background-color: #008CBA;
+    border-color: #007095;
+    color: #FFFFFF;
+    transition: background-color 300ms ease-out;
+}
+li, .liright {
+    float: right;
+}
+li, .lileft {
+    float: left;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(46, 36, 51,0.8);
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+li a:hover {
+    background-color: rgba(0,0,0,0.5);
+    text-decoration: none;
+}
+
+.bb {
+    background-image: url("../../Views/static/background2.jpg");
+    /*padding-top: 40px;*/
+    /*padding-bottom: 40px;*/
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    background-size: cover;
+}
+.form-signin {
+    max-width: 550px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: rgba(255, 255, 255, 0.91);
+    border: 3px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+.icon-bard {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+table {
+    background: white;
+    margin-bottom: 1.25rem;
+    border: solid 1px #dddddd; }
+table thead,
+table tfoot {
+    background: whitesmoke; }
+table thead tr th,
+table thead tr td,
+table tfoot tr th,
+table tfoot tr td {
+    padding: 0.5rem 0.625rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #222222;
+    text-align: left; }
+table tr th,
+table tr td {
+    padding: 0.5625rem 0.625rem;
+    font-size: 0.875rem;
+    color: #222222; }
+table tr.even, table tr.alt, table tr:nth-of-type(even) {
+    background: #f9f9f9; }
+table thead tr th,
+table tfoot tr th,
+table tbody tr td,
+table tr td,
+table tfoot tr td {
+    display: table-cell;
+    line-height: 1.125rem; }
+.row-padding {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.navmenu-default, .navbar-default .navbar-offcanvas {
+    border-color: #e7e7e7;
+    background-color: rgba(46, 36, 51,0.8);
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.alert-warning {
+    color: red;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

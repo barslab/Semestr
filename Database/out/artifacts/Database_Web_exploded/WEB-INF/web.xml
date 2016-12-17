@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <servlet>
+        <servlet-name>all_desiase</servlet-name>
+        <servlet-class>servlets.desiases.AllDesiaseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>all_desiase</servlet-name>
+        <url-pattern>/desiases</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>symptom</servlet-name>
+        <servlet-class>servlets.symptoms.SymptomServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>symptom</servlet-name>
+        <url-pattern>/symptom/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>procedure</servlet-name>
+        <servlet-class>servlets.procedures.ProcedureServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>procedure</servlet-name>
+        <url-pattern>/procedure/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>drug</servlet-name>
+        <servlet-class>servlets.drugs.DrugServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>drug</servlet-name>
+        <url-pattern>/drug/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>desiase</servlet-name>
+        <servlet-class>servlets.desiases.DesiaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>desiase</servlet-name>
+        <url-pattern>/desiase/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>symptomDelete</servlet-name>
+        <servlet-class>servlets.symptoms.SymptomDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>symptomDelete</servlet-name>
+        <url-pattern>/symptomdelete/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>desiaseDelete</servlet-name>
+        <servlet-class>servlets.desiases.DesiaseDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>desiaseDelete</servlet-name>
+        <url-pattern>/desiasedelete/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>symptoms</servlet-name>
+        <servlet-class>servlets.symptoms.AllSymptomServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>symptoms</servlet-name>
+        <url-pattern>/symptoms</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>procedures</servlet-name>
+        <servlet-class>servlets.procedures.AllProcedureServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>procedures</servlet-name>
+        <url-pattern>/procedures</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>procedureDelete</servlet-name>
+        <servlet-class>servlets.procedures.ProcedureDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>procedureDelete</servlet-name>
+        <url-pattern>/proceduredelete/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>drugDelete</servlet-name>
+        <servlet-class>servlets.drugs.DrugDeleteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>drugDelete</servlet-name>
+        <url-pattern>/drugdelete/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>drugs</servlet-name>
+        <servlet-class>servlets.drugs.AllDrugServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>drugs</servlet-name>
+        <url-pattern>/drugs</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>desiase_add</servlet-name>
+        <servlet-class>servlets.desiases.DesiaseAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>desiase_add</servlet-name>
+        <url-pattern>/desiaseadd</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>drug_add</servlet-name>
+        <servlet-class>servlets.drugs.DrugAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>drug_add</servlet-name>
+        <url-pattern>/drugadd</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>procedure_add</servlet-name>
+        <servlet-class>servlets.procedures.ProcedureAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>procedure_add</servlet-name>
+        <url-pattern>/procedureadd</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>symptom_add</servlet-name>
+        <servlet-class>servlets.symptoms.SymptomAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>symptom_add</servlet-name>
+        <url-pattern>/symptomadd</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>symptom_edit</servlet-name>
+        <servlet-class>servlets.symptoms.SymptomEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>symptom_edit</servlet-name>
+        <url-pattern>/symptomedit/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>procedure_edit</servlet-name>
+        <servlet-class>servlets.procedures.ProcedureEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>procedure_edit</servlet-name>
+        <url-pattern>/procedureedit/*</url-pattern>
+    </servlet-mapping>
+</web-app>
