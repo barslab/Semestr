@@ -6,6 +6,7 @@ import models.SideEffects;
 import models.Symptoms;
 
 import java.sql.*;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ public class SymptomsDaoImpl implements SymptomsDao {
     }
     public List<Symptoms> find(int desiase_id) {
         List<Symptoms> symptoms = new LinkedList<Symptoms>();
-        Statement statement=null;
         String query="SELECT symptoms.symptoms_id,symptoms.name,symptoms.more_information FROM symptoms, symptoms_desiase WHERE desiase_id=? AND symptoms_desiase.symptoms_id=symptoms.symptoms_id";
         PreparedStatement preparedStatement;
         try {
@@ -33,9 +33,25 @@ public class SymptomsDaoImpl implements SymptomsDao {
         return symptoms;
     }
 
+    public HashSet<Integer> findIdOfDesiase(int desiase_id) {
+        HashSet<Integer> ids = new HashSet<Integer>();
+        String query="SELECT symptoms_id FROM symptoms_desiase WHERE desiase_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, desiase_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("symptoms_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }
+
     public List<Symptoms> findAll() {
         List<Symptoms> symptoms = new LinkedList<Symptoms>();
-        Statement statement=null;
         String query="SELECT * FROM symptoms";
         PreparedStatement preparedStatement;
         try {
@@ -51,7 +67,6 @@ public class SymptomsDaoImpl implements SymptomsDao {
     }
 
     public Symptoms findSymptom(int symptom_id) {
-        Statement statement=null;
         String query="SELECT * FROM symptoms WHERE symptoms_id=?";
         PreparedStatement preparedStatement;
         try {
@@ -99,18 +114,18 @@ public class SymptomsDaoImpl implements SymptomsDao {
         return symptoms;
     }
 
-    public void putSymptoms(Symptoms symptoms) {
+    public void putSymptoms(Symptoms symptoms) throws SQLException {
         String query = "INSERT INTO symptoms (name, more_information) VALUES(?,?);";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, symptoms.getName());
             preparedStatement.setString(2, symptoms.getMore_information());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при добавлении симптома");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при добавлении симптома");
+//            e.printStackTrace();
+//        }
     }
 
     public void deleteSymptoms(int symptoms_id) {

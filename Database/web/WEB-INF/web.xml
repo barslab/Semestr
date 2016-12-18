@@ -180,4 +180,13 @@
         <servlet-name>desiase_edit</servlet-name>
         <url-pattern>/desiaseedit/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>desiase_formulation</servlet-name>
+        <servlet-class>servlets.desiases.DesiaseFormulationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>desiase_formulation</servlet-name>
+        <url-pattern>/desiaseformulation</url-pattern>
+    </servlet-mapping>
 </web-app>

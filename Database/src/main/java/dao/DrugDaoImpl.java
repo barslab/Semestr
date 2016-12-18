@@ -164,10 +164,10 @@ public class DrugDaoImpl implements DrugDao {
         return -1;
     }
 
-    public void putDrug(Drug drug) {
+    public void putDrug(Drug drug) throws SQLException {
         String query = "INSERT INTO drug (name, quantity,form, contraindications, overdose) VALUES(?,?,?,?,?);";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,drug.getName());
             preparedStatement.setInt(2, drug.getQuantity());
@@ -175,11 +175,11 @@ public class DrugDaoImpl implements DrugDao {
             preparedStatement.setString(4, drug.getContraindications());
             preparedStatement.setString(5, drug.getOverdose());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при добавлении лекарства");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при добавлении лекарства");
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+//        }
     }
 
     public void putSideEffectsDrug(int drug_id, int side_effects_id) {

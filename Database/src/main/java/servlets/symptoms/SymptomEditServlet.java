@@ -18,10 +18,21 @@ public class SymptomEditServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         String[] path = req.getPathInfo().split("/");
-        symptom_id = Integer.parseInt(path[path.length-1]);
+        try {
+            symptom_id = Integer.parseInt(path[path.length - 1]);
+        }
+        catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
+        }
         System.out.println(symptom_id);
-        req.setAttribute("symptom", symptomsDao.findSymptom(symptom_id));
-        getServletContext().getRequestDispatcher("/JSP/edit_symptom.jsp").forward(req, resp);
+        if(symptomsDao.findSymptom(symptom_id)!=null) {
+            req.setAttribute("symptom", symptomsDao.findSymptom(symptom_id));
+            getServletContext().getRequestDispatcher("/JSP/edit_symptom.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "Некорректный id у симптома");
+            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+        }
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

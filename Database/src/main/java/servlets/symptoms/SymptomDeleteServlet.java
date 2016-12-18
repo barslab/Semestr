@@ -11,20 +11,31 @@ import java.io.IOException;
 import java.sql.Connection;
 
 public class SymptomDeleteServlet extends HttpServlet {
-
+    private int symptom_id;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         String text = null;
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         String[] path = req.getPathInfo().split("/");
-        int symptom_id = Integer.parseInt(path[path.length-1]);
+        try {
+            symptom_id = Integer.parseInt(path[path.length - 1]);
+        }
+        catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
+        }
         System.out.println(symptom_id);
-        text = "Симптом "+symptomsDao.findSymptom(symptom_id).getName()+" успешно удалена";
-        symptomsDao.deleteSymptoms(symptom_id);
-        req.setAttribute("symptoms", symptomsDao.findAll());
-        req.setAttribute("text", text);
-        getServletContext().getRequestDispatcher("/JSP/all_symptom.jsp").forward(req, resp);
+        if(symptomsDao.findSymptom(symptom_id)!=null) {
+            text = "Симптом "+symptomsDao.findSymptom(symptom_id).getName()+" успешно удалена";
+            symptomsDao.deleteSymptoms(symptom_id);
+            req.setAttribute("symptoms", symptomsDao.findAll());
+            req.setAttribute("text", text);
+            getServletContext().getRequestDispatcher("/JSP/all_symptom.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "Некорректный id у симптома");
+            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+        }
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

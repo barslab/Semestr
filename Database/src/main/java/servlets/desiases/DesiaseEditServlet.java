@@ -25,21 +25,32 @@ public class DesiaseEditServlet extends HttpServlet {
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         RecomendedDrugsDaoImpl recomendedDrugsDao = new RecomendedDrugsDaoImpl(connection);
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
-        OtherMethods others = new OtherMethods();
+        OtherMethods others = new OtherMethods(connection);
         String[] path = req.getPathInfo().split("/");
-        desiase_id = Integer.parseInt(path[path.length - 1]);
+        try {
+            desiase_id = Integer.parseInt(path[path.length - 1]);
+        }
+        catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
+        }
         System.out.println(desiase_id);
-        req.setAttribute("desiase", desiaseDao.find(desiase_id));
-        req.setAttribute("symptoms_desiase", desiaseDao.find(desiase_id).getSymptoms());
-        req.setAttribute("other_symptoms", symptomsDao.findSymptoms(others.deleter(symptomsDao.findAllId(), symptomsDao.findIds(desiaseDao.find(desiase_id).getSymptoms()))));
+        if(desiaseDao.find(desiase_id)!=null) {
+            req.setAttribute("desiase", desiaseDao.find(desiase_id));
+            req.setAttribute("symptoms_desiase", desiaseDao.find(desiase_id).getSymptoms());
+            req.setAttribute("other_symptoms", symptomsDao.findSymptoms(others.deleter(symptomsDao.findAllId(), symptomsDao.findIds(desiaseDao.find(desiase_id).getSymptoms()))));
 
-        req.setAttribute("procedures_desiase", desiaseDao.find(desiase_id).getProcedures());
-        req.setAttribute("other_procedures", proceduresDao.findProcedures(others.deleter(proceduresDao.findAllId(), proceduresDao.findIds(desiaseDao.find(desiase_id).getProcedures()))));
+            req.setAttribute("procedures_desiase", desiaseDao.find(desiase_id).getProcedures());
+            req.setAttribute("other_procedures", proceduresDao.findProcedures(others.deleter(proceduresDao.findAllId(), proceduresDao.findIds(desiaseDao.find(desiase_id).getProcedures()))));
 
-        req.setAttribute("drug_desiase", drugDao.findDrugs(desiase_id));
-        req.setAttribute("other_drug", drugDao.findDrugs(others.deleter(drugDao.findAllDrugsId(), recomendedDrugsDao.findIds(drugDao.findDrugs(desiase_id)))));
+            req.setAttribute("drug_desiase", drugDao.findDrugs(desiase_id));
+            req.setAttribute("other_drug", drugDao.findDrugs(others.deleter(drugDao.findAllDrugsId(), recomendedDrugsDao.findIds(drugDao.findDrugs(desiase_id)))));
 
-        getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "Некорректный id у болезни");
+            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+        }
     }
 
     @Override

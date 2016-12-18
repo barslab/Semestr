@@ -22,17 +22,28 @@ public class DrugEditServlet extends HttpServlet {
         DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         SubstitutesDaoImpl substitutesDao = new SubstitutesDaoImpl(connection);
         SideEffectsDaoImpl sideEffectsDao = new SideEffectsDaoImpl(connection);
-        OtherMethods others = new OtherMethods();
+        OtherMethods others = new OtherMethods(connection);
         String[] path = req.getPathInfo().split("/");
-        drug_id = Integer.parseInt(path[path.length - 1]);
+        try {
+            drug_id = Integer.parseInt(path[path.length - 1]);
+        }
+        catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
+        }
         System.out.println(drug_id);
-        req.setAttribute("drug", drugDao.findDrug(drug_id));
-        req.setAttribute("substitutes_drug", drugDao.findDrugsOfDrug(drug_id));
+        if(drugDao.findDrug(drug_id)!=null) {
+            req.setAttribute("drug", drugDao.findDrug(drug_id));
+            req.setAttribute("substitutes_drug", drugDao.findDrugsOfDrug(drug_id));
 //        Все лекарства, которые не заменители
-        req.setAttribute("other_drug", drugDao.findDrugs(others.deleter(drugDao.findAllDrugsId(), drugDao.findDrugsId(drug_id), drug_id)));
-        req.setAttribute("side_drug", sideEffectsDao.find(drug_id));
-        req.setAttribute("other_side", sideEffectsDao.findSideEffects(others.deleter(sideEffectsDao.findAllId(), sideEffectsDao.findId(sideEffectsDao.find(drug_id)))));
-        getServletContext().getRequestDispatcher("/JSP/edit_drug.jsp").forward(req, resp);
+            req.setAttribute("other_drug", drugDao.findDrugs(others.deleter(drugDao.findAllDrugsId(), drugDao.findDrugsId(drug_id), drug_id)));
+            req.setAttribute("side_drug", sideEffectsDao.find(drug_id));
+            req.setAttribute("other_side", sideEffectsDao.findSideEffects(others.deleter(sideEffectsDao.findAllId(), sideEffectsDao.findId(sideEffectsDao.find(drug_id)))));
+            getServletContext().getRequestDispatcher("/JSP/edit_drug.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "Некорректный id у лекарства");
+            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+        }
     }
 
     @Override

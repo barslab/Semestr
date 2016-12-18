@@ -2,6 +2,7 @@ package dao;
 
 import models.Drug;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DrugDao {
@@ -14,7 +15,7 @@ public interface DrugDao {
     Drug findDrug(int drug_id);
     List<String> findAllName();
     int findDrugId(String name);
-    void putDrug(Drug drug);
+    void putDrug(Drug drug) throws SQLException;
     void putSideEffectsDrug(int drug_id, int side_effects_id);
     void deleteDrug(int id);
     void changeDrug(Drug drug);

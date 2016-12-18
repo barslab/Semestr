@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ProcedureAddServlet extends HttpServlet {
 
@@ -19,14 +20,20 @@ public class ProcedureAddServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/JSP/procedure_add.jsp").forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String name = req.getParameter("name");
         String recommendation = req.getParameter("recommendation");
-        proceduresDao.putProcedures(new Procedures(name, recommendation));
-        req.setAttribute("text", "Процедура "+name+" успешно добавлена");
+        try {
+            proceduresDao.putProcedures(new Procedures(name, recommendation));
+        } catch (SQLException e) {
+            req.setAttribute("error", "Такая процедура уже существует");
+            getServletContext().getRequestDispatcher("/JSP/procedure_add.jsp").forward(req, resp);
+        }
+        req.setAttribute("text", "Процедура " + name + " успешно добавлена");
         req.setAttribute("procedures", proceduresDao.findAll());
         getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
     }

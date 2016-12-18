@@ -56,20 +56,40 @@ public class DesiaseDaoImpl implements DesiaseDao {
         return desiases;
     }
 
-    public void putDesiase(Desiase desiase) {
-        String query = "INSERT INTO desiase (name, chance_desiase_man,chance_desiase_women,average_age) VALUES(?,?,?,?);";
+    public List<Integer> findAllId() {
+        Statement statement=null;
+        List<Integer> ids = new LinkedList<Integer>();
+        String query = "SELECT desiase_id FROM desiase";
         PreparedStatement preparedStatement;
         try {
+            preparedStatement = connection.prepareStatement(query);
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                ids.add(rs.getInt("desiase_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;    }
+
+    public void putDesiase(Desiase desiase) throws SQLException {
+        String query = "INSERT INTO desiase (name, chance_desiase_man,chance_desiase_women,average_age) VALUES(?,?,?,?);";
+        PreparedStatement preparedStatement;
+//        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, desiase.getName());
             preparedStatement.setFloat(2, desiase.getChance_desiase_man());
             preparedStatement.setFloat(3, desiase.getChance_desiase_women());
             preparedStatement.setInt(4, desiase.getAverage_age());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при добавлении болезни");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при добавлении болезни");
+//            System.out.println(e.getErrorCode());
+//            System.out.println(e.getLocalizedMessage());
+//            System.out.println(e.getSQLState());
+//            e.printStackTrace();
+//        }
     }
 
     public void putDesiaseSymptoms(int desiase_id, int symptoms_id) {

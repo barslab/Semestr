@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Connection connection = ConnectionFactory.getInstance().getConnection();
-        OtherMethods others = new OtherMethods();
+        OtherMethods others = new OtherMethods(connection);
         DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         List<Drug> drugs = drugDao.findDrugs(12);
 //        List<Integer> all = drugDao.findAllDrugsId();

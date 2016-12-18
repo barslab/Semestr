@@ -31,7 +31,7 @@
     <li class="lileft"><a href="/drugs">Лекарства</a></li>
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
-    <li class="liright"><a href="/symptomadd">Добавить симптом</a></li>
+    <li class="liright"><a href="/desiaseadd">Добавить болезнь</a></li>
 </ul>
 <div class="container">
     <div class="large-offset-3 large-6 columns">

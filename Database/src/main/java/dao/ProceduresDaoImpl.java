@@ -99,18 +99,18 @@ public class ProceduresDaoImpl implements ProceduresDao {
         return procedures;
     }
 
-    public void putProcedures(Procedures procedures) {
+    public void putProcedures(Procedures procedures) throws SQLException {
         String query = "INSERT INTO procedures (name, recommendations) VALUES(?,?);";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, procedures.getName());
             preparedStatement.setString(2, procedures.getRecommendations());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при добавлении процедуры");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при добавлении процедуры");
+//            e.printStackTrace();
+//        }
     }
 
     public void deleteProcedures(int procedures_id) {

@@ -40,7 +40,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/desiaseadd">Добавить болезнь</a></li>
-    <li class="liright"><a href="/desiaseform">Формулировка болезни</a></li>
+    <li class="liright"><a href="/desiaseformulation">Формулировка болезни</a></li>
 </ul>
 <center><div class="container">
     <h1 class="back"><center >Список всех болезней поликлиники</center></h1>

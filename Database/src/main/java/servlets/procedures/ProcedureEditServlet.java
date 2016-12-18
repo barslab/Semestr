@@ -18,10 +18,21 @@ public class ProcedureEditServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String[] path = req.getPathInfo().split("/");
-        procedure_id = Integer.parseInt(path[path.length-1]);
+        try {
+            procedure_id = Integer.parseInt(path[path.length - 1]);
+        }
+        catch (NumberFormatException e) {
+            getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
+        }
         System.out.println(procedure_id);
-        req.setAttribute("procedure", proceduresDao.findProcedure(procedure_id));
-        getServletContext().getRequestDispatcher("/JSP/edit_procedure.jsp").forward(req, resp);
+        if(proceduresDao.findProcedure(procedure_id)!=null) {
+            req.setAttribute("procedures", proceduresDao.findProcedure(procedure_id));
+            getServletContext().getRequestDispatcher("/JSP/edit_procedure.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "Некорректный id у процедуры");
+            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+        }
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

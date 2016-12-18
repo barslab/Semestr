@@ -43,7 +43,7 @@
     <li class="liright"><a href="/drugadd">Добавить лекарство</a></li>
 </ul>
 <center><div class="container">
-    <h1 class="back"><center >Список всех болезней поликлиники</center></h1>
+    <h1 class="back"><center >Список болезней</center></h1>
     <% if ((String) request.getAttribute("text")!=null) {%>
     <div class="alert alert-info">
         <center><strong>Отлично!</strong> <%=(String) request.getAttribute("text")%></center></div>
