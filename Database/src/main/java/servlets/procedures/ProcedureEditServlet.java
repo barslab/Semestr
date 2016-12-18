@@ -39,6 +39,7 @@ public class ProcedureEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String name = req.getParameter("name");
         if(name.length()>45) {
@@ -53,9 +54,10 @@ public class ProcedureEditServlet extends HttpServlet {
                 req.setAttribute("procedures", proceduresDao.findAll());
                 getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
             } catch (SQLException e) {
+                e.printStackTrace();
                 req.setAttribute("error", "Такая процедура уже существует");
                 req.setAttribute("procedures", proceduresDao.findProcedure(procedure_id));
-                getServletContext().getRequestDispatcher("/JSP/procedure_edit.jsp").forward(req, resp);
+                getServletContext().getRequestDispatcher("/JSP/edit_procedure.jsp").forward(req, resp);
             }
         }
     }

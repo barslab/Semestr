@@ -29,6 +29,7 @@ public class DrugAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         SideEffectsDaoImpl sideEffectsDao = new SideEffectsDaoImpl(connection);
         SubstitutesDaoImpl substitutesDao = new SubstitutesDaoImpl(connection);

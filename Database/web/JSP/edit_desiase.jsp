@@ -29,7 +29,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/desiaseadd">Добавить болезнь</a></li>
-    <li class="liright"><a href="/desiaseedit/<%=desiase.getId()%>">Изменить болезнь</a></li>
+    <li class="liright"><a href="/desiaseedit/<%=desiase.getId()%>">Редактировать болезнь</a></li>
 </ul>
 <div class="container">
     <div class="large-offset-3 large-6 columns">
@@ -98,7 +98,7 @@
                         for (int i = 0; i < desiase.getRecomendedDrugs().size(); i++) {
                     %>
                     <label><a
-                            href="/drug/<%=desiase.getRecomendedDrugs().get(i).getDrug().getId()%>" target="_blank"><b><%=desiase.getRecomendedDrugs().get(i).getDrug().getName()%>
+                            href="/drug/<%=desiase.getRecomendedDrugs().get(i).getDrug().getId()%>" title="Количество на складе: <%=desiase.getRecomendedDrugs().get(i).getDrug().getQuantity()%>"target="_blank"><b><%=desiase.getRecomendedDrugs().get(i).getDrug().getName()%>
                     </b></a></label>
                     <input class="input-block-level" name="<%=desiase.getRecomendedDrugs().get(i).getDrug().getName()%>" type="text"
                            value="<%=desiase.getRecomendedDrugs().get(i).getQuantity()%>">
@@ -106,7 +106,7 @@
                     <%
                         for (int i = 0; i < other_drug.size(); i++) {
                     %>
-                    <label><a
+                    <label><a title="Количество на складе: <%=other_drug.get(i).getQuantity()%>"
                             href="/drug/<%=other_drug.get(i).getId()%>" target="_blank"><b><%=other_drug.get(i).getName()%>
                     </b></a></label>
                     <input class="input-block-level" name="<%=other_drug.get(i).getName()%>" type="text"

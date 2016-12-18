@@ -21,7 +21,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/symptomdelete/<%=symptom.getId()%>">Удалить симптом</a></li>
-    <li class="liright"><a href="/symptomedit/<%=symptom.getId()%>">Изменить симптом</a></li>
+    <li class="liright"><a href="/symptomedit/<%=symptom.getId()%>">Редактировать симптом</a></li>
 </ul>
 <center>
     <div class="container">

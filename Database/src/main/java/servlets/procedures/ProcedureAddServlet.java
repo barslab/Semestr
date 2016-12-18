@@ -24,6 +24,7 @@ public class ProcedureAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String name = req.getParameter("name");
         if(name.length()>45) {

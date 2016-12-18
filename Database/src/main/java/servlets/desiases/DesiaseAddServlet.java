@@ -32,6 +32,7 @@ public class DesiaseAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         List<String> error = new LinkedList<String>();
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);

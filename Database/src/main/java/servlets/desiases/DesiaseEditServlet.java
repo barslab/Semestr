@@ -56,6 +56,7 @@ public class DesiaseEditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         List<String> error = new LinkedList<String>();
         DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         DesiaseDaoImpl desiaseDao = new DesiaseDaoImpl(connection);
@@ -131,22 +132,22 @@ public class DesiaseEditServlet extends HttpServlet {
                                         getServletContext().getRequestDispatcher("/JSP/all_desiase.jsp").forward(req, resp);
                                     } catch (SQLException e) {
                                         req.setAttribute("error", "Такая болезнь уже существует");
-                                        getServletContext().getRequestDispatcher("/JSP/desiase_add.jsp").forward(req, resp);
+                                        getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
                                     }
                                 }
                             } catch (NumberFormatException e3) {
                                 req.setAttribute("error", "Некорректно введено значение в поле для среднего возраста больного");
-                                getServletContext().getRequestDispatcher("/JSP/desiase_add.jsp").forward(req, resp);
+                                getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
                             }
                         }
                     } catch (NumberFormatException e2) {
                         req.setAttribute("error", "Некорректно введено значение в поле для вероятности заболевания женщины");
-                        getServletContext().getRequestDispatcher("/JSP/desiase_add.jsp").forward(req, resp);
+                        getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
                     }
                 }
             } catch (NumberFormatException e1) {
                 req.setAttribute("error", "Некорректно введено значение в поле для вероятности заболевания мужчины");
-                getServletContext().getRequestDispatcher("/JSP/desiase_add.jsp").forward(req, resp);
+                getServletContext().getRequestDispatcher("/JSP/edit_desiase.jsp").forward(req, resp);
             }
         }
     }

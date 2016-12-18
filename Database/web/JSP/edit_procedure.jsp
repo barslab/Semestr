@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="javafx.geometry.Side" %>
 <%@ page import="models.*" %>
-    <%Procedures procedures = (Procedures) request.getAttribute("procedure");%>
+    <%Procedures procedures = (Procedures) request.getAttribute("procedures");%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/procedureadd">Добавить симптом</a></li>
-    <li class="liright"><a href="/procedureedit/<%=procedures.getId()%>">Изменить процедуру</a></li>
+    <li class="liright"><a href="/procedureedit/<%=procedures.getId()%>">Редактировать процедуру</a></li>
 </ul>
 <div class="container">
     <div class="large-offset-3 large-6 columns">
@@ -40,7 +40,7 @@
             </h1>
             <input class="input-block-level" id="name-field" name="name" type="text"
                    placeholder="Введите новое название процедуры" value="<%=procedures.getName()%>" required/>
-            <textarea class="form-control" rows="5" name="recommendations" placeholder="Введите новое рекомендацию к процедуре" required/><%=procedures.getRecommendations()%> </textarea><br>
+            <textarea class="form-control" rows="5" name="recommendation" placeholder="Введите новое рекомендацию к процедуре" required/><%=procedures.getRecommendations()%> </textarea><br>
             <center><input class="button" type="submit" value="Редактировать процедуру"></center>
         </form>
     </div>

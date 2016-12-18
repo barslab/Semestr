@@ -25,6 +25,7 @@ public class SymptomAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = ConnectionFactory.getInstance().getConnection();
+        req.setCharacterEncoding("UTF-8");
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         String name = req.getParameter("name");
         if(name.length()>45) {

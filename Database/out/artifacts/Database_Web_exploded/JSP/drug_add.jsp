@@ -43,9 +43,9 @@
                    placeholder="Введите количество поставляемого лекарства на склад" required/></td></tr>
             <div class="form-group">
                 <select class="input-block-level form-control" id="form" name="form">
-                    <option value="maz">Мазь</option>
-                    <option value="jidkost">Жидкость</option>
-                    <option value="tabletki">Таблетки</option>
+                    <option value="мазь">Мазь</option>
+                    <option value="жидкость">Жидкость</option>
+                    <option value="таблетки">Таблетки</option>
                 </select>
             </div>
             <input class="input-block-level" id="overdose-field" name="overdose" type="text"
