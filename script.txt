@@ -1,0 +1,314 @@
+CREATE DATABASE semestr
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Russian_Russia.1251'
+       LC_CTYPE = 'Russian_Russia.1251'
+       CONNECTION LIMIT = -1;
+
+CREATE TABLE public.desiase
+(
+  desiase_id SERIAL PRIMARY KEY,
+  chance_desiase_man numeric NOT NULL,
+  chance_desiase_women numeric NOT NULL,
+  average_age integer NOT NULL,
+  name character varying(45) NOT NULL,
+  CONSTRAINT desiase_pkey PRIMARY KEY (desiase_id),
+  CONSTRAINT name_unique UNIQUE (name),
+  CONSTRAINT check_age CHECK (average_age >= 0 AND average_age <= 130),
+  CONSTRAINT check_chance_man CHECK (chance_desiase_man >= 0 AND chance_desiase_man <= 1),
+  CONSTRAINT check_chance_women CHECK (chance_desiase_women >= 0 AND chance_desiase_women <= 1)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.desiase
+  OWNER TO postgres;
+
+CREATE INDEX desiase_name
+  ON public.desiase
+  USING btree
+  (name COLLATE pg_catalog."default");
+
+
+CREATE TABLE public.drug
+(
+  drug_id SERIAL PRIMARY KEY,
+  name character varying(45) NOT NULL,
+  quantity integer NOT NULL,
+  form character varying(45) NOT NULL,
+  contraindications text NOT NULL,
+  overdose character varying(60) NOT NULL,
+  CONSTRAINT drug_pkey PRIMARY KEY (drug_id),
+  CONSTRAINT drug_name_unique UNIQUE (name),
+  CONSTRAINT check_form CHECK (form = 'maz' OR form = 'jidkost' OR form = 'tabletki' OR form = 'мазь' OR form = 'жидкость' OR form = 'таблетки'),
+  CONSTRAINT check_quantity CHECK (quantity >= 0)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.drug
+  OWNER TO postgres;
+
+CREATE INDEX drug_name
+  ON public.drug
+  USING btree
+  (name COLLATE pg_catalog."default");
+
+
+CREATE TABLE public.procedures
+(
+  procedures_id SERIAL PRIMARY KEY,
+  name character varying(45) NOT NULL,
+  recommendations text NOT NULL,
+  CONSTRAINT procedures_pkey PRIMARY KEY (procedures_id),
+  CONSTRAINT procedures_name_unique UNIQUE (name)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.procedures
+  OWNER TO postgres;
+
+CREATE TABLE public.side_effects
+(
+  side_effects_id SERIAL PRIMARY KEY,
+  name text,
+  CONSTRAINT side_effects_pkey PRIMARY KEY (side_effects_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.side_effects
+  OWNER TO postgres;
+
+
+CREATE TABLE public.symptoms
+(
+  symptoms_id SERIAL PRIMARY KEY,
+  name character varying(45) NOT NULL,
+  more_information text NOT NULL,
+  CONSTRAINT symptoms_pkey PRIMARY KEY (symptoms_id),
+  CONSTRAINT symptoms_name_unique UNIQUE (name)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.symptoms
+  OWNER TO postgres;
+
+CREATE INDEX symptoms_name
+  ON public.symptoms
+  USING btree
+  (name COLLATE pg_catalog."default");
+
+
+CREATE TABLE public.symptoms_desiase
+(
+  id integer SERIAL PRIMARY KEY,
+  desiase_id integer,
+  symptoms_id integer,
+  CONSTRAINT symptoms_desiase_pkey PRIMARY KEY (id),
+  CONSTRAINT desiase_fkey FOREIGN KEY (desiase_id)
+      REFERENCES public.desiase (desiase_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT symptoms_fkey FOREIGN KEY (symptoms_id)
+      REFERENCES public.symptoms (symptoms_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.symptoms_desiase
+  OWNER TO postgres;
+
+
+CREATE TABLE public.substitutes
+(
+  substitutes_id SERIAL PRIMARY KEY,
+  drug_id integer,
+  substitutes_drug_id integer,
+  distinction character varying(45),
+  CONSTRAINT substitutes_pkey PRIMARY KEY (substitutes_id),
+  CONSTRAINT drug2_fkey FOREIGN KEY (substitutes_drug_id)
+      REFERENCES public.drug (drug_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT drug_fkey FOREIGN KEY (drug_id)
+      REFERENCES public.drug (drug_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.substitutes
+  OWNER TO postgres;
+
+
+
+
+CREATE TABLE public.drug_side
+(
+  drug_id integer,
+  side_effects_id integer,
+  CONSTRAINT drug_fkey FOREIGN KEY (drug_id)
+      REFERENCES public.drug (drug_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT side_fkey FOREIGN KEY (side_effects_id)
+      REFERENCES public.side_effects (side_effects_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.drug_side
+  OWNER TO postgres;
+
+
+CREATE TABLE public.procedures_desiase
+(
+  procedures_id integer,
+  desiase_id integer,
+  procedures_desiase_id SERIAL PRIMARY KEY,
+  CONSTRAINT procedures_desiase_pkey PRIMARY KEY (procedures_desiase_id),
+  CONSTRAINT desiase_fkey FOREIGN KEY (desiase_id)
+      REFERENCES public.desiase (desiase_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT procedure_fkey FOREIGN KEY (procedures_id)
+      REFERENCES public.procedures (procedures_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.procedures_desiase
+  OWNER TO postgres;
+
+
+CREATE TABLE public.recomended_drug
+(
+  quantity integer NOT NULL,
+  drug_id integer,
+  desiase_id integer,
+  recomended_drugs_id SERIAL PRIMARY KEY,
+  CONSTRAINT recomended_drug_pkey PRIMARY KEY (recomended_drugs_id),
+  CONSTRAINT desiase_fkey FOREIGN KEY (desiase_id)
+      REFERENCES public.desiase (desiase_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT drug_fkey FOREIGN KEY (drug_id)
+      REFERENCES public.drug (drug_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT check_quantity CHECK (quantity >= 0)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.recomended_drug
+  OWNER TO postgres;
+
+
+
+CREATE OR REPLACE FUNCTION public.trigger_function_check_count()
+  RETURNS trigger AS
+$BODY$
+DECLARE
+count int;
+BEGIN
+select drug.quantity into count from drug where drug_id = NEW.drug_id;
+if NEW.quantity<1 then
+raise exception 'Количество выписываемого лекарства не может быть меньше 1';
+end if;
+if count<NEW.quantity then
+    RAISE EXCEPTION 'Недостаточное количество лекарства';
+end if;
+return NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.trigger_function_check_count()
+  OWNER TO postgres;
+
+
+
+
+CREATE TRIGGER insert_recomended_drug
+  BEFORE INSERT
+  ON public.recomended_drug
+  FOR EACH ROW
+  EXECUTE PROCEDURE public.trigger_function_check_count();
+
+
+
+CREATE OR REPLACE FUNCTION public.symptoms_delete(integer)
+  RETURNS void AS
+$BODY$ 
+
+BEGIN 
+DELETE FROM symptoms WHERE symptoms_id=$1; 
+END; 
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.symptoms_delete(integer)
+  OWNER TO postgres;
+
+
+
+CREATE OR REPLACE FUNCTION public.symptoms_insert(
+    character varying,
+    character varying)
+  RETURNS void AS
+$BODY$ 
+
+BEGIN 
+INSERT INTO symptoms (name,more_information) VALUES($1,$2); 
+END; 
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.symptoms_insert(character varying, character varying)
+  OWNER TO postgres;
+
+
+
+INSERT INTO desiase VALUES(1, 0.23, 0.11, 22, 'Грипп');
+INSERT INTO desiase VALUES(2, 0.23, 0.11, 56, 'Рак');
+INSERT INTO desiase VALUES(3, 0.89, 0.92, 10, 'Ветрянка');
+INSERT INTO desiase VALUES(4, 0.90, 0.85, 12, 'Краснуха');
+
+
+INSERT INTO drug VALUES(1, 'Парацетомол', 23, 'таблетки','противопоказано беременным', 'больше 10 таблеток');
+INSERT INTO drug VALUES(2, 'Валидол', 53, 'жидкость','противопоказано детям', 'больше 50 грамм');
+INSERT INTO drug VALUES(3, 'Карвалол', 13, 'таблетки','противопоказано детям', 'больше 120 грамм');
+
+INSERT INTO procedures VALUES(1, 'укол', 'укол в вену');
+INSERT INTO procedures VALUES(2, 'горчица', 'горчица на 15 минут');
+
+
+INSERT INTO side_effects VALUES(1, 'жар');
+INSERT INTO side_effects VALUES(2, 'головные боли');
+
+
+INSERT INTO symptoms VALUES(1, 'головные боли','давящая головная боль');
+INSERT INTO symptoms VALUES(2, 'сыпь','красная сыпь вокруг шеи');
+INSERT INTO symptoms VALUES(3, 'усталость','сильная усталость');
+
+
+INSERT INTO drug_side VALUES(2, 2);
+INSERT INTO drug_side VALUES(2, 3);
+
+INSERT INTO recomended_drug VALUES(2, 1, 1, 1);
+INSERT INTO recomended_drug VALUES(3, 2, 1, 2);
+
+
+INSERT INTO symptoms_desiase VALUES(1, 3, 1);
+INSERT INTO symptoms_desiase VALUES(2, 3, 2);
+INSERT INTO symptoms_desiase VALUES(3, 3, 3);
+
+
+INSERT INTO procedures_desiase VALUES(1, 3, 1);
+INSERT INTO procedures_desiase VALUES(2, 3, 2);
+
+
+INSERT INTO substitutes VALUES(1, 2, 3);
+INSERT INTO substitutes VALUES(2, 3, 2);
