@@ -143,4 +143,21 @@ public class DesiaseDaoImpl implements DesiaseDao {
             e.printStackTrace();
         }
     }
+
+    public void changeDesiase(Desiase desiase) {
+        String query = "UPDATE desiase SET name=?, chance_desiase_man=?, chance_desiase_women=?, average_age=? where desiase_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1, desiase.getName());
+            preparedStatement.setFloat(2, desiase.getChance_desiase_man());
+            preparedStatement.setFloat(3, desiase.getChance_desiase_women());
+            preparedStatement.setInt(4, desiase.getAverage_age());
+            preparedStatement.setInt(5, desiase.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при изменении болезни");
+            e.printStackTrace();
+        }
+    }
 }

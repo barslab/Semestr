@@ -162,4 +162,22 @@
         <servlet-name>procedure_edit</servlet-name>
         <url-pattern>/procedureedit/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>drug_edit</servlet-name>
+        <servlet-class>servlets.drugs.DrugEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>drug_edit</servlet-name>
+        <url-pattern>/drugedit/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>desiase_edit</servlet-name>
+        <servlet-class>servlets.desiases.DesiaseEditServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>desiase_edit</servlet-name>
+        <url-pattern>/desiaseedit/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -25,22 +25,6 @@
     </style>
 </head>
 <body class="bb">
-<nav class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-    <a class="navmenu-brand" href="/desiase">Поиск по болезням</a>
-    <a class="navmenu-brand" href="/lksetting">Настройки личного кабинта</a>
-    <a class="navmenu-brand" href="/patients">Все ваши пациенты</a>
-    <a class="navmenu-brand" href="/activepatients">Все невыписанные пациенты</a>
-    <a class="navmenu-brand" href="/notactibepatients">Все выписанные пациенты</a>
-    <a class="navmenu-brand" href="/allpatients">Все пациенты поликлиники</a>
-    <a class="navmenu-brand" href="/logout">Выйти из аккаунта</a>
-</nav>
-<div class="navbar navbar-default navbar-fixed-top">
-    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-</div>
 <ul>
     <li class="lileft"><a class="active" href=""> </a></li>
     <li class="lileft"><a href="/desiases">Болезни</a></li>
@@ -81,7 +65,7 @@
                         for (int i = 0; i < symptoms.size(); i++) {
                     %>
                     <label><input type="checkbox" name="symptoms2" value="<%=symptoms.get(i).getId()%>"><a
-                            href="symptom/<%=symptoms.get(i).getId()%>"
+                            href="/symptom/<%=symptoms.get(i).getId()%>"
                             target="_blank"><b><%=symptoms.get(i).getName()%>
                     </b></a></label><br>
                     <%}%></div>
@@ -91,7 +75,7 @@
                         for (int i = 0; i < procedures.size(); i++) {
                     %>
                     <label><input type="checkbox" name="procedures2" value="<%=procedures.get(i).getId()%>"><a
-                            href="procedure/<%=procedures.get(i).getId()%>"
+                            href="/procedure/<%=procedures.get(i).getId()%>"
                             target="_blank"><b><%=procedures.get(i).getName()%>
                     </b></a></label><br>
                     <%}%></div>
@@ -101,7 +85,7 @@
                         for (int i = 0; i < drugs.size(); i++) {
                     %>
                     <label><a
-                            href="drug/<%=drugs.get(i).getId()%>" target="_blank"><b><%=drugs.get(i).getName()%>
+                            href="/drug/<%=drugs.get(i).getId()%>" target="_blank"><b><%=drugs.get(i).getName()%>
                     </b></a></label>
                     <input class="input-block-level" name="<%=drugs.get(i).getName()%>" type="text"
                            value="0">

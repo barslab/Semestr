@@ -67,6 +67,38 @@ public class SymptomsDaoImpl implements SymptomsDao {
         return null;
     }
 
+    public List<Integer> findAllId() {
+        List<Integer> ids = new LinkedList<Integer>();
+        String query="SELECT symptoms_id FROM symptoms";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("symptoms_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }
+
+    public List<Integer> findIds(List<Symptoms> symptoms) {
+        List<Integer> ids = new LinkedList<Integer>();
+        for(int i=0;i<symptoms.size();i++) {
+            ids.add(symptoms.get(i).getId());
+        }
+        return ids;
+    }
+
+    public List<Symptoms> findSymptoms(List<Integer> symptoms_id) {
+        List<Symptoms> symptoms = new LinkedList<Symptoms>();
+        for(int i=0; i< symptoms_id.size(); i++) {
+            symptoms.add(findSymptom(symptoms_id.get(i)));
+        }
+        return symptoms;
+    }
+
     public void putSymptoms(Symptoms symptoms) {
         String query = "INSERT INTO symptoms (name, more_information) VALUES(?,?);";
         PreparedStatement preparedStatement;
@@ -93,6 +125,20 @@ public class SymptomsDaoImpl implements SymptomsDao {
             e.printStackTrace();
         }
     }
+
+    public void deleteSymptomsOfDesiase(int desiase_id) {
+        String query = "DELETE FROM symptoms_desiase where desiase_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, desiase_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при удалении симптома у болезни");
+            e.printStackTrace();
+        }
+    }
+
     public void changeSymptoms(int symptoms_id, String new_name, String new_informations) {
         String query = "UPDATE symptoms SET more_information=?, name=? where symptoms_id=?";
         PreparedStatement preparedStatement;

@@ -39,7 +39,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/desiasedelete/<%=desiases.getId()%>">Удалить болезнь</a></li>
-    <li class="liright"><a href="/patientadd">Редактировать болезнь</a></li>
+    <li class="liright"><a href="/desiaseedit/<%=desiases.getId()%>">Редактировать болезнь</a></li>
 </ul>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <center><div class="container">

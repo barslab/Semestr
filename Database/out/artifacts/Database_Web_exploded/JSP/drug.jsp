@@ -40,7 +40,7 @@
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/drugdelete/<%=drug.getId()%>">Удалить лекарство</a></li>
-    <li class="liright"><a href="/patientadd">Редактировать лекарство</a></li>
+    <li class="liright"><a href="/drugedit/<%=drug.getId()%>">Редактировать лекарство</a></li>
 </ul>
 <center>
     <div class="container">

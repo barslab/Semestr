@@ -14,4 +14,5 @@ public interface DesiaseDao {
 //    перенести в интерфейс рекомендованных лекарств
     void putDesiaseRecomendedDrug(int desiase_id, int drug_id, int quantity);
     void deleteDesiase(int desiase_id);
+    void changeDesiase(Desiase desiase);
 }

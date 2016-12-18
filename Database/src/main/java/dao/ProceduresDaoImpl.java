@@ -36,7 +36,6 @@ public class ProceduresDaoImpl implements ProceduresDao {
 
     public List<Procedures> findAll() {
         List<Procedures> procedures = new LinkedList<Procedures>();
-        Statement statement=null;
         String query="SELECT * FROM procedures";
         PreparedStatement preparedStatement;
         try {
@@ -68,6 +67,38 @@ public class ProceduresDaoImpl implements ProceduresDao {
         return null;
     }
 
+    public List<Integer> findAllId() {
+        List<Integer> ids = new LinkedList<Integer>();
+        String query="SELECT procedures_id FROM procedures";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("procedures_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }
+
+    public List<Integer> findIds(List<Procedures> procedures) {
+        List<Integer> ids = new LinkedList<Integer>();
+        for(int i=0;i<procedures.size();i++) {
+            ids.add(procedures.get(i).getId());
+        }
+        return ids;
+    }
+
+    public List<Procedures> findProcedures(List<Integer> procedures_id) {
+        List<Procedures> procedures = new LinkedList<Procedures>();
+        for(int i=0;i<procedures_id.size();i++) {
+            procedures.add(findProcedure(procedures_id.get(i)));
+        }
+        return procedures;
+    }
+
     public void putProcedures(Procedures procedures) {
         String query = "INSERT INTO procedures (name, recommendations) VALUES(?,?);";
         PreparedStatement preparedStatement;
@@ -91,6 +122,19 @@ public class ProceduresDaoImpl implements ProceduresDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Ошибка при удалении процедуры");
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteProceduresOfDesiase(int desiase_id) {
+        String query = "DELETE FROM procedures_desiase where desiase_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, desiase_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при удалении процедуры у болезни");
             e.printStackTrace();
         }
     }

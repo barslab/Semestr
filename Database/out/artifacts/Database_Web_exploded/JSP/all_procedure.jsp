@@ -38,6 +38,7 @@
     <li class="lileft"><a class="active" href=""> </a></li>
     <li class="lileft"><a href="/desiases">Болезни</a></li>
     <li class="lileft"><a href="/drugs">Лекарства</a></li>
+    <li class="lileft"><a href="/procedures">Процедуры</a></li>
     <li class="lileft"><a href="/symptoms">Симптомы</a></li>
     <li class="liright"><a href="/procedureadd">Добавить процедуру</a></li>
 </ul>

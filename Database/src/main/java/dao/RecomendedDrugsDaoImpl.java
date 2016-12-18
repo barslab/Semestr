@@ -34,11 +34,29 @@ public class RecomendedDrugsDaoImpl implements RecomendedDrugsDao {
         return recomendedDrugses;
     }
 
+    public List<Integer> findIds(List<Drug> drugs) {
+        List<Integer> ids = new LinkedList<Integer>();
+        for(int i=0; i<drugs.size(); i++) {
+            ids.add(drugs.get(i).getId());
+        }
+        return ids;
+    }
+
     public void putRecomendedDrugs(RecomendedDrugs recomendedDrugs) {
 
     }
-    public void deleteRecomendedDrugs(int recomended_drugs_id) {
 
+    public void deleteRecomendedDrugs(int desiase_id) {
+        String query = "DELETE FROM recomended_drug WHERE desiase_id=?;";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, desiase_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при удалении лекарств к болезни");
+            e.printStackTrace();
+        }
     }
 
     public void changeRecomendedDrugs(int desiase_id, int new_quantity) {

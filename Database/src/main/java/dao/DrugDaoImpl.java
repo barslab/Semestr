@@ -38,7 +38,7 @@ public class DrugDaoImpl implements DrugDao {
     public List<Drug> findDrugs(int desiase_id) {
         List<Drug> drugs = new LinkedList<Drug>();
         Statement statement=null;
-        String query="SELECT * FROM recomended_drug, drug WHERE desiase_id=? AND recomended_drug.desiase_id=drug.drug_id";
+        String query="SELECT * FROM recomended_drug, drug WHERE desiase_id=? AND recomended_drug.drug_id=drug.drug_id";
         PreparedStatement preparedStatement;
         try {
             preparedStatement=connection.prepareStatement(query);
@@ -53,8 +53,67 @@ public class DrugDaoImpl implements DrugDao {
         }
         return drugs;
     }
-    public Drug findDrug(int drug_id) {
+
+    public List<Drug> findDrugs(List<Integer> ids) {
+        List<Drug> drugs = new LinkedList<Drug>();
+        for(int i=0; i<ids.size(); i++) {
+            drugs.add(findDrug(ids.get(i)));
+        }
+        return drugs;
+    }
+
+    public List<Drug> findDrugsOfDrug(int drug_id) {
+        List<Drug> drugs = new LinkedList<Drug>();
+        String query="SELECT * FROM substitutes, drug WHERE substitutes.drug_id=? AND substitutes.substitutes_drug_id=drug.drug_id";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, drug_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                drugs.add(new Drug(rs.getInt("drug_id"), rs.getInt("quantity"), rs.getString("name"), rs.getString("form"), rs.getString("contraindications"),
+                        rs.getString("overdose"), sideEffectsDao.find(rs.getInt("drug_id")), substitutesService.find(rs.getInt("drug_id"))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drugs;
+    }
+
+    public List<Integer> findDrugsId(int drug_id) {
+        List<Integer> drugsId = new LinkedList<Integer>();
+        String query="SELECT drug.drug_id FROM substitutes, drug WHERE substitutes.drug_id=? AND substitutes.substitutes_drug_id=drug.drug_id";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, drug_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                drugsId.add(rs.getInt("drug_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drugsId;
+    }
+
+    public List<Integer> findAllDrugsId() {
+        List<Integer> drugsId = new LinkedList<Integer>();
         Statement statement=null;
+        String query="SELECT drug_id FROM drug;";
+        try {
+            statement= connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                drugsId.add(rs.getInt("drug_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drugsId;
+    }
+
+    public Drug findDrug(int drug_id) {
         String query="SELECT * FROM drug WHERE drug_id=?";
         PreparedStatement preparedStatement;
         try {
@@ -149,16 +208,21 @@ public class DrugDaoImpl implements DrugDao {
             e.printStackTrace();
         }
     }
-    public void changeQuantityDrug(int id, int new_quantity) {
-        String query = "UPDATE drug SET quantity=? where drug_id=?";
+
+    public void changeDrug(Drug drug) {
+        String query = "UPDATE drug SET name=?, quantity=?, form=?, contraindications=?, overdose=? where drug_id=?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement=connection.prepareStatement(query);
-            preparedStatement.setInt(1,new_quantity);
-            preparedStatement.setInt(2,id);
+            preparedStatement.setString(1, drug.getName());
+            preparedStatement.setInt(2, drug.getQuantity());
+            preparedStatement.setString(3, drug.getForm());
+            preparedStatement.setString(4, drug.getContraindications());
+            preparedStatement.setString(5, drug.getOverdose());
+            preparedStatement.setInt(6, drug.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Ошибка при изменении количества лекарства на складе");
+            System.out.println("Ошибка при изменении лекарства");
             e.printStackTrace();
         }
     }

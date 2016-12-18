@@ -47,6 +47,19 @@ public class SubstitutesDaoImpl implements SubstitutesDao {
         }
     }
 
+    public void deleteAllSubstitutes(int drug_id) {
+        String query = "DELETE FROM substitutes WHERE drug_id=?;";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, drug_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Ошибка при удалении заменителей лекарства");
+            e.printStackTrace();
+        }
+    }
+
     public Drug findSubstitutesDrug(int substitutes_id) {
         String query="SELECT * FROM drug WHERE drug_id=?";
         PreparedStatement preparedStatement;
