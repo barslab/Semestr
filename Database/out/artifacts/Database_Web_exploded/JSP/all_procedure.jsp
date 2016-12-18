@@ -18,24 +18,7 @@
     <link href="../Views/css/my-styles.css" rel="stylesheet" media="screen">
 </head>
 <body class="bb">
-<nav class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-    <a class="navmenu-brand" href="/desiase">Поиск по болезням</a>
-    <a class="navmenu-brand" href="/lksetting">Настройки личного кабинта</a>
-    <a class="navmenu-brand" href="/patients">Все ваши пациенты</a>
-    <a class="navmenu-brand" href="/activepatients">Все невыписанные пациенты</a>
-    <a class="navmenu-brand" href="/notactibepatients">Все выписанные пациенты</a>
-    <a class="navmenu-brand" href="/allpatients">Все пациенты поликлиники</a>
-    <a class="navmenu-brand" href="/logout">Выйти из аккаунта</a>
-</nav>
-<div class="navbar navbar-default navbar-fixed-top">
-    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-</div>
 <ul>
-    <li class="lileft"><a class="active" href=""> </a></li>
     <li class="lileft"><a href="/desiases">Болезни</a></li>
     <li class="lileft"><a href="/drugs">Лекарства</a></li>
     <li class="lileft"><a href="/procedures">Процедуры</a></li>

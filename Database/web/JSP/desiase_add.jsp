@@ -26,7 +26,6 @@
 </head>
 <body class="bb">
 <ul>
-    <li class="lileft"><a class="active" href=""> </a></li>
     <li class="lileft"><a href="/desiases">Болезни</a></li>
     <li class="lileft"><a href="/drugs">Лекарства</a></li>
     <li class="lileft"><a href="/procedures">Процедуры</a></li>
@@ -85,7 +84,7 @@
                         for (int i = 0; i < drugs.size(); i++) {
                     %>
                     <label><a
-                            href="/drug/<%=drugs.get(i).getId()%>" target="_blank"><b><%=drugs.get(i).getName()%>
+                            href="/drug/<%=drugs.get(i).getId()%>" target="_blank" title="Количество на складе: <%=drugs.get(i).getQuantity()%>"><b><%=drugs.get(i).getName()%>
                     </b></a></label>
                     <input class="input-block-level" name="<%=drugs.get(i).getName()%>" type="text"
                            value="0">

@@ -27,16 +27,22 @@ public class SymptomAddServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         String name = req.getParameter("name");
-        String more_information = req.getParameter("more_information");
-        try {
-            symptomsDao.putSymptoms(new Symptoms(name, more_information));
-        } catch (SQLException e) {
-            req.setAttribute("error", "Такой симптом уже существует");
+        if(name.length()>45) {
+            req.setAttribute("error", "Название симптома не может превышать 45 символов");
             getServletContext().getRequestDispatcher("/JSP/symptom_add.jsp").forward(req, resp);
-
         }
-        req.setAttribute("text", "Симптом " + name + " успешно добавлен");
-        req.setAttribute("symptoms", symptomsDao.findAll());
-        getServletContext().getRequestDispatcher("/JSP/all_symptom.jsp").forward(req, resp);
+        else {
+            String more_information = req.getParameter("more_information");
+            try {
+                symptomsDao.putSymptoms(new Symptoms(name, more_information));
+                req.setAttribute("text", "Симптом " + name + " успешно добавлен");
+                req.setAttribute("symptoms", symptomsDao.findAll());
+                getServletContext().getRequestDispatcher("/JSP/all_symptom.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                req.setAttribute("error", "Такой симптом уже существует");
+                getServletContext().getRequestDispatcher("/JSP/symptom_add.jsp").forward(req, resp);
+                e.printStackTrace();
+            }
+        }
     }
 }

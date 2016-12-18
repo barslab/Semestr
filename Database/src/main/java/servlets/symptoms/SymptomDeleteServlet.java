@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class SymptomDeleteServlet extends HttpServlet {
     private int symptom_id;
@@ -27,7 +28,11 @@ public class SymptomDeleteServlet extends HttpServlet {
         System.out.println(symptom_id);
         if(symptomsDao.findSymptom(symptom_id)!=null) {
             text = "Симптом "+symptomsDao.findSymptom(symptom_id).getName()+" успешно удалена";
-            symptomsDao.deleteSymptoms(symptom_id);
+            try {
+                symptomsDao.deleteSymptoms(symptom_id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             req.setAttribute("symptoms", symptomsDao.findAll());
             req.setAttribute("text", text);
             getServletContext().getRequestDispatcher("/JSP/all_symptom.jsp").forward(req, resp);

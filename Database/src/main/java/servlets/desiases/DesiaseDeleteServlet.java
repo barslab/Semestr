@@ -1,5 +1,6 @@
 package servlets.desiases;
 import dao.DesiaseDaoImpl;
+import dao.DrugDaoImpl;
 import factories.ConnectionFactory;
 
 import javax.servlet.ServletException;
@@ -16,24 +17,26 @@ public class DesiaseDeleteServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         String text = null;
         DesiaseDaoImpl desiaseDao = new DesiaseDaoImpl(connection);
+        DrugDaoImpl drugDao = new DrugDaoImpl(connection);
         String[] path = req.getPathInfo().split("/");
         try {
             desiase_id = Integer.parseInt(path[path.length - 1]);
+            if(desiaseDao.find(desiase_id)!=null) {
+                text = "Болезнь "+desiaseDao.find(desiase_id).getName()+" успешно удалена";
+                drugDao.changeDrugQuantity(desiase_id);
+                desiaseDao.deleteDesiase(desiase_id);
+                req.setAttribute("desiases", desiaseDao.findAll());
+                req.setAttribute("text", text);
+                req.setAttribute("error_drug", null);
+                getServletContext().getRequestDispatcher("/JSP/all_desiase.jsp").forward(req, resp);
+            }
+            else {
+                req.setAttribute("error", "Некорректный id у болезни");
+                getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+            }
         }
         catch (NumberFormatException e) {
             getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
-        }
-        System.out.println(desiase_id);
-        if(desiaseDao.find(desiase_id)!=null) {
-            text = "Болезнь "+desiaseDao.find(desiase_id).getName()+" успешно удалена";
-            desiaseDao.deleteDesiase(desiase_id);
-            req.setAttribute("desiases", desiaseDao.findAll());
-            req.setAttribute("text", text);
-            getServletContext().getRequestDispatcher("/JSP/all_desiase.jsp").forward(req, resp);
-        }
-        else {
-            req.setAttribute("error", "Некорректный id у болезни");
-            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
         }
     }
     @Override

@@ -31,8 +31,8 @@
     <schema id="10" parent="1" name="public">
       <object-id>2200</object-id>
       <visible>1</visible>
-      <introspection-state-number>1494</introspection-state-number>
-      <introspection-timestamp>2016-12-14.20:40:23.322</introspection-timestamp>
+      <introspection-state-number>1885</introspection-state-number>
+      <introspection-timestamp>2016-12-19.00:14:21.079</introspection-timestamp>
     </schema>
     <schema id="11" parent="1" name="pg_catalog">
       <object-id>11</object-id>
@@ -125,407 +125,569 @@
       <object-id>139334</object-id>
       <state-number>1357</state-number>
     </table>
-    <routine id="35" parent="10" name="trigger_function_check_count">
+    <view id="35" parent="10" name="desiase_drugs">
+      <object-id>163844</object-id>
+      <state-number>1871</state-number>
+    </view>
+    <view id="36" parent="10" name="desiase_symptoms_view">
+      <object-id>163858</object-id>
+      <state-number>1885</state-number>
+    </view>
+    <view id="37" parent="10" name="substitutes_drugs_view">
+      <object-id>163852</object-id>
+      <state-number>1873</state-number>
+    </view>
+    <routine id="38" parent="10" name="symptoms_delete">
+      <object-id>163857</object-id>
+      <state-number>1882</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="39" parent="10" name="symptoms_insert">
+      <object-id>163856</object-id>
+      <state-number>1878</state-number>
+      <routine-kind>FUNCTION</routine-kind>
+    </routine>
+    <routine id="40" parent="10" name="trigger_function_check_count">
       <object-id>139327</object-id>
       <state-number>1282</state-number>
       <routine-kind>FUNCTION</routine-kind>
     </routine>
-    <column id="36" parent="25" name="desiase_id">
+    <column id="41" parent="25" name="desiase_id">
       <state-number>1137</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('desiase_desiase_id_seq'::regclass)</default-expression>
     </column>
-    <column id="37" parent="25" name="chance_desiase_man">
+    <column id="42" parent="25" name="chance_desiase_man">
       <state-number>1137</state-number>
       <mandatory>1</mandatory>
       <data-type>numeric|0</data-type>
     </column>
-    <column id="38" parent="25" name="chance_desiase_women">
+    <column id="43" parent="25" name="chance_desiase_women">
       <state-number>1137</state-number>
       <mandatory>1</mandatory>
       <data-type>numeric|0</data-type>
     </column>
-    <column id="39" parent="25" name="average_age">
+    <column id="44" parent="25" name="average_age">
       <state-number>1137</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
     </column>
-    <column id="40" parent="25" name="name">
+    <column id="45" parent="25" name="name">
       <state-number>1139</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <index id="41" parent="25" name="desiase_pkey">
+    <index id="46" parent="25" name="desiase_pkey">
       <object-id>131085</object-id>
       <columns>desiase_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <index id="42" parent="25" name="desiase_name">
+    <index id="47" parent="25" name="name_unique">
+      <object-id>155663</object-id>
+      <columns>name</columns>
+      <desc-columns />
+      <unique>1</unique>
+    </index>
+    <index id="48" parent="25" name="desiase_name">
       <object-id>139329</object-id>
       <columns>name</columns>
       <desc-columns />
     </index>
-    <key id="43" parent="25" name="desiase_pkey">
+    <key id="49" parent="25" name="desiase_pkey">
       <object-id>131086</object-id>
       <columns>desiase_id</columns>
       <underlying-index>desiase_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <check id="44" parent="25" name="check_chance_man">
+    <key id="50" parent="25" name="name_unique">
+      <object-id>155664</object-id>
+      <columns>name</columns>
+      <underlying-index>name_unique</underlying-index>
+    </key>
+    <check id="51" parent="25" name="check_chance_man">
       <object-id>131079</object-id>
       <columns>chance_desiase_man</columns>
       <predicate>(chance_desiase_man &gt;= (0)::numeric) AND (chance_desiase_man &lt;= (1)::numeric)</predicate>
     </check>
-    <check id="45" parent="25" name="check_chance_women">
+    <check id="52" parent="25" name="check_chance_women">
       <object-id>131080</object-id>
       <columns>chance_desiase_women</columns>
       <predicate>(chance_desiase_women &gt;= (0)::numeric) AND (chance_desiase_women &lt;= (1)::numeric)</predicate>
     </check>
-    <check id="46" parent="25" name="check_age">
+    <check id="53" parent="25" name="check_age">
       <object-id>131081</object-id>
       <columns>average_age</columns>
       <predicate>(average_age &gt;= 0) AND (average_age &lt;= 130)</predicate>
     </check>
-    <column id="47" parent="26" name="drug_id">
+    <column id="54" parent="26" name="drug_id">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('drug_drug_id_seq'::regclass)</default-expression>
     </column>
-    <column id="48" parent="26" name="name">
+    <column id="55" parent="26" name="name">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="49" parent="26" name="quantity">
+    <column id="56" parent="26" name="quantity">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
     </column>
-    <column id="50" parent="26" name="form">
+    <column id="57" parent="26" name="form">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="51" parent="26" name="contraindications">
+    <column id="58" parent="26" name="contraindications">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <column id="52" parent="26" name="overdose">
+    <column id="59" parent="26" name="overdose">
       <state-number>1144</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(60)|0</data-type>
     </column>
-    <index id="53" parent="26" name="drug_pkey">
+    <index id="60" parent="26" name="drug_pkey">
       <object-id>131138</object-id>
       <columns>drug_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <index id="54" parent="26" name="drug_name">
+    <index id="61" parent="26" name="drug_name_unique">
+      <object-id>155671</object-id>
+      <columns>name</columns>
+      <desc-columns />
+      <unique>1</unique>
+    </index>
+    <index id="62" parent="26" name="drug_name">
       <object-id>139331</object-id>
       <columns>name</columns>
       <desc-columns />
     </index>
-    <key id="55" parent="26" name="drug_pkey">
+    <key id="63" parent="26" name="drug_pkey">
       <object-id>131139</object-id>
       <columns>drug_id</columns>
       <underlying-index>drug_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <check id="56" parent="26" name="check_quantity">
+    <key id="64" parent="26" name="drug_name_unique">
+      <object-id>155672</object-id>
+      <columns>name</columns>
+      <underlying-index>drug_name_unique</underlying-index>
+    </key>
+    <check id="65" parent="26" name="check_quantity">
       <object-id>131133</object-id>
       <columns>quantity</columns>
       <predicate>quantity &gt;= 0</predicate>
     </check>
-    <check id="57" parent="26" name="check_form">
+    <check id="66" parent="26" name="check_form">
       <object-id>155650</object-id>
       <columns>form</columns>
-      <predicate>((form)::text = 'maz'::text) OR ((form)::text = 'jidkost'::text) OR ((form)::text = 'tabletki'::text) OR ((form)::text = 'мазь'::text) OR ((form)::text = 'жидкость'::text) OR ((form)::text = 'таблетки'::text)</predicate>
+      <predicate>((form)::text = 'maz'::text) OR ((form)::text = 'jidkost'::text) OR ((form)::text = 'tabletki'::text) OR ((form)::text = '????'::text) OR ((form)::text = '????????'::text) OR ((form)::text = '????????'::text)</predicate>
     </check>
-    <column id="58" parent="27" name="drug_id">
+    <column id="67" parent="27" name="drug_id">
       <state-number>1300</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="59" parent="27" name="side_effects_id">
+    <column id="68" parent="27" name="side_effects_id">
       <state-number>1300</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <foreign-key id="60" parent="27" name="drug_fkey">
+    <foreign-key id="69" parent="27" name="drug_fkey">
       <object-id>155651</object-id>
       <columns>drug_id</columns>
       <ref-key>~.drug.drug_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="61" parent="27" name="side_fkey">
+    <foreign-key id="70" parent="27" name="side_fkey">
       <object-id>155656</object-id>
       <columns>side_effects_id</columns>
       <ref-key>~.side_effects.side_effects_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="62" parent="28" name="procedures_id">
+    <column id="71" parent="28" name="procedures_id">
       <state-number>1142</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('procedures_procedures_id_seq'::regclass)</default-expression>
     </column>
-    <column id="63" parent="28" name="name">
+    <column id="72" parent="28" name="name">
       <state-number>1142</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="64" parent="28" name="recommendations">
+    <column id="73" parent="28" name="recommendations">
       <state-number>1142</state-number>
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <index id="65" parent="28" name="procedures_pkey">
+    <index id="74" parent="28" name="procedures_pkey">
       <object-id>131112</object-id>
       <columns>procedures_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="66" parent="28" name="procedures_pkey">
+    <index id="75" parent="28" name="procedures_name_unique">
+      <object-id>155669</object-id>
+      <columns>name</columns>
+      <desc-columns />
+      <unique>1</unique>
+    </index>
+    <key id="76" parent="28" name="procedures_pkey">
       <object-id>131113</object-id>
       <columns>procedures_id</columns>
       <underlying-index>procedures_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <column id="67" parent="29" name="procedures_id">
+    <key id="77" parent="28" name="procedures_name_unique">
+      <object-id>155670</object-id>
+      <columns>name</columns>
+      <underlying-index>procedures_name_unique</underlying-index>
+    </key>
+    <column id="78" parent="29" name="procedures_id">
       <state-number>1143</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="68" parent="29" name="desiase_id">
+    <column id="79" parent="29" name="desiase_id">
       <state-number>1143</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="69" parent="29" name="procedures_desiase_id">
+    <column id="80" parent="29" name="procedures_desiase_id">
       <state-number>1331</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('procedures_desiase_procedures_desiase_id_seq'::regclass)</default-expression>
     </column>
-    <index id="70" parent="29" name="procedures_desiase_pkey">
+    <index id="81" parent="29" name="procedures_desiase_pkey">
       <object-id>139386</object-id>
       <columns>procedures_desiase_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="71" parent="29" name="procedures_desiase_pkey">
+    <key id="82" parent="29" name="procedures_desiase_pkey">
       <object-id>139387</object-id>
       <columns>procedures_desiase_id</columns>
       <underlying-index>procedures_desiase_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <foreign-key id="72" parent="29" name="procedure_fkey">
+    <foreign-key id="83" parent="29" name="procedure_fkey">
       <object-id>131173</object-id>
       <columns>procedures_id</columns>
       <ref-key>~.procedures.procedures_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="73" parent="29" name="desiase_fkey">
+    <foreign-key id="84" parent="29" name="desiase_fkey">
       <object-id>131178</object-id>
       <columns>desiase_id</columns>
       <ref-key>~.desiase.desiase_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="74" parent="30" name="quantity">
+    <column id="85" parent="30" name="quantity">
       <state-number>1148</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
     </column>
-    <column id="75" parent="30" name="drug_id">
+    <column id="86" parent="30" name="drug_id">
       <state-number>1148</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="76" parent="30" name="desiase_id">
+    <column id="87" parent="30" name="desiase_id">
       <state-number>1148</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="77" parent="30" name="recomended_drugs_id">
+    <column id="88" parent="30" name="recomended_drugs_id">
       <state-number>1308</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('recomended_drug_recomended_drugs_id_seq'::regclass)</default-expression>
     </column>
-    <index id="78" parent="30" name="recomended_drug_pkey">
+    <index id="89" parent="30" name="recomended_drug_pkey">
       <object-id>139377</object-id>
       <columns>recomended_drugs_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="79" parent="30" name="recomended_drug_pkey">
+    <key id="90" parent="30" name="recomended_drug_pkey">
       <object-id>139378</object-id>
       <columns>recomended_drugs_id</columns>
       <underlying-index>recomended_drug_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <foreign-key id="80" parent="30" name="drug_fkey">
+    <foreign-key id="91" parent="30" name="drug_fkey">
       <object-id>131193</object-id>
       <columns>drug_id</columns>
       <ref-key>~.drug.drug_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="81" parent="30" name="desiase_fkey">
+    <foreign-key id="92" parent="30" name="desiase_fkey">
       <object-id>131198</object-id>
       <columns>desiase_id</columns>
       <ref-key>~.desiase.desiase_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <check id="82" parent="30" name="check_quantity">
+    <check id="93" parent="30" name="check_quantity">
       <object-id>131162</object-id>
       <columns>quantity</columns>
       <predicate>quantity &gt;= 0</predicate>
     </check>
-    <column id="83" parent="31" name="side_effects_id">
+    <column id="94" parent="31" name="side_effects_id">
       <state-number>1307</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('side_effects_id_seq'::regclass)</default-expression>
     </column>
-    <column id="84" parent="31" name="name">
+    <column id="95" parent="31" name="name">
       <state-number>1299</state-number>
       <data-type>text|0</data-type>
     </column>
-    <index id="85" parent="31" name="side_effects_pkey">
+    <index id="96" parent="31" name="side_effects_pkey">
       <object-id>139359</object-id>
       <columns>side_effects_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="86" parent="31" name="side_effects_pkey">
+    <key id="97" parent="31" name="side_effects_pkey">
       <object-id>139360</object-id>
       <columns>side_effects_id</columns>
       <underlying-index>side_effects_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <column id="87" parent="32" name="substitutes_id">
+    <column id="98" parent="32" name="substitutes_id">
       <state-number>1146</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('substitutes_substitutes_id_seq'::regclass)</default-expression>
     </column>
-    <column id="88" parent="32" name="distinction">
+    <column id="99" parent="32" name="distinction">
       <state-number>1494</state-number>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="89" parent="32" name="drug_id">
+    <column id="100" parent="32" name="drug_id">
       <state-number>1146</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="90" parent="32" name="substitutes_drug_id">
+    <column id="101" parent="32" name="substitutes_drug_id">
       <state-number>1338</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <index id="91" parent="32" name="substitutes_pkey">
+    <index id="102" parent="32" name="substitutes_pkey">
       <object-id>131149</object-id>
       <columns>substitutes_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="92" parent="32" name="substitutes_pkey">
+    <key id="103" parent="32" name="substitutes_pkey">
       <object-id>131150</object-id>
       <columns>substitutes_id</columns>
       <underlying-index>substitutes_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <foreign-key id="93" parent="32" name="drug_fkey">
+    <foreign-key id="104" parent="32" name="drug_fkey">
       <object-id>131188</object-id>
       <columns>substitutes_drug_id</columns>
       <ref-key>~.drug.drug_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="94" parent="32" name="drug2_fkey">
+    <foreign-key id="105" parent="32" name="drug2_fkey">
       <object-id>139392</object-id>
       <columns>?</columns>
       <ref-key>~.drug.drug_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="95" parent="33" name="symptoms_id">
+    <column id="106" parent="33" name="symptoms_id">
       <state-number>1138</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('symptoms_symptoms_id_seq'::regclass)</default-expression>
     </column>
-    <column id="96" parent="33" name="name">
+    <column id="107" parent="33" name="name">
       <state-number>1138</state-number>
       <mandatory>1</mandatory>
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="97" parent="33" name="more_information">
+    <column id="108" parent="33" name="more_information">
       <state-number>1138</state-number>
       <mandatory>1</mandatory>
       <data-type>text|0</data-type>
     </column>
-    <index id="98" parent="33" name="symptoms_pkey">
+    <index id="109" parent="33" name="symptoms_pkey">
       <object-id>131096</object-id>
       <columns>symptoms_id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <index id="99" parent="33" name="symptoms_name">
+    <index id="110" parent="33" name="symptoms_name_unique">
+      <object-id>155667</object-id>
+      <columns>name</columns>
+      <desc-columns />
+      <unique>1</unique>
+    </index>
+    <index id="111" parent="33" name="symptoms_name">
       <object-id>139330</object-id>
       <columns>name</columns>
       <desc-columns />
     </index>
-    <key id="100" parent="33" name="symptoms_pkey">
+    <key id="112" parent="33" name="symptoms_pkey">
       <object-id>131097</object-id>
       <columns>symptoms_id</columns>
       <underlying-index>symptoms_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <column id="101" parent="34" name="id">
+    <key id="113" parent="33" name="symptoms_name_unique">
+      <object-id>155668</object-id>
+      <columns>name</columns>
+      <underlying-index>symptoms_name_unique</underlying-index>
+    </key>
+    <column id="114" parent="34" name="id">
       <state-number>1298</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
       <default-expression>nextval('symptoms_desiase_id_seq'::regclass)</default-expression>
     </column>
-    <column id="102" parent="34" name="desiase_id">
+    <column id="115" parent="34" name="desiase_id">
       <state-number>1298</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <column id="103" parent="34" name="symptoms_id">
+    <column id="116" parent="34" name="symptoms_id">
       <state-number>1298</state-number>
       <data-type>integer|0</data-type>
     </column>
-    <index id="104" parent="34" name="symptoms_desiase_pkey">
+    <index id="117" parent="34" name="symptoms_desiase_pkey">
       <object-id>139338</object-id>
       <columns>id</columns>
       <desc-columns />
       <unique>1</unique>
     </index>
-    <key id="105" parent="34" name="symptoms_desiase_pkey">
+    <key id="118" parent="34" name="symptoms_desiase_pkey">
       <object-id>139339</object-id>
       <columns>id</columns>
       <underlying-index>symptoms_desiase_pkey</underlying-index>
       <primary>1</primary>
     </key>
-    <foreign-key id="106" parent="34" name="desiase_fkey">
+    <foreign-key id="119" parent="34" name="desiase_fkey">
       <object-id>147456</object-id>
       <columns>desiase_id</columns>
       <ref-key>~.desiase.desiase_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="107" parent="34" name="symptoms_fkey">
+    <foreign-key id="120" parent="34" name="symptoms_fkey">
       <object-id>147461</object-id>
       <columns>symptoms_id</columns>
       <ref-key>~.symptoms.symptoms_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <argument id="108" parent="35">
+    <column id="121" parent="35" name="quantity">
+      <state-number>1871</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="122" parent="35" name="drug_id">
+      <state-number>1871</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="123" parent="35" name="name">
+      <state-number>1871</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="124" parent="35" name="form">
+      <state-number>1871</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="125" parent="35" name="contraindications">
+      <state-number>1871</state-number>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="126" parent="35" name="overdose">
+      <state-number>1871</state-number>
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <column id="127" parent="35" name="desiase_id">
+      <state-number>1871</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="128" parent="36" name="symptoms_id">
+      <state-number>1885</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="129" parent="36" name="name">
+      <state-number>1885</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="130" parent="36" name="more_information">
+      <state-number>1885</state-number>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="131" parent="37" name="substitutes_id">
+      <state-number>1873</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="132" parent="37" name="drug_id">
+      <state-number>1873</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="133" parent="37" name="substitutes_drug_id">
+      <state-number>1873</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="134" parent="37" name="distinction">
+      <state-number>1873</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="135" parent="37" name="name">
+      <state-number>1873</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="136" parent="37" name="quantity">
+      <state-number>1873</state-number>
+      <data-type>integer|0</data-type>
+    </column>
+    <column id="137" parent="37" name="form">
+      <state-number>1873</state-number>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="138" parent="37" name="contraindications">
+      <state-number>1873</state-number>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="139" parent="37" name="overdose">
+      <state-number>1873</state-number>
+      <data-type>varchar(60)|0</data-type>
+    </column>
+    <argument id="140" parent="38">
+      <direction>IN</direction>
+      <data-type>integer|0</data-type>
+    </argument>
+    <argument id="141" parent="38">
+      <direction>RETURN</direction>
+      <data-type>void|0</data-type>
+    </argument>
+    <argument id="142" parent="39">
+      <direction>IN</direction>
+      <data-type>varchar|0</data-type>
+    </argument>
+    <argument id="143" parent="39">
+      <direction>IN</direction>
+      <data-type>varchar|0</data-type>
+    </argument>
+    <argument id="144" parent="39">
+      <direction>RETURN</direction>
+      <data-type>void|0</data-type>
+    </argument>
+    <argument id="145" parent="40">
       <direction>RETURN</direction>
       <data-type>trigger|0</data-type>
     </argument>

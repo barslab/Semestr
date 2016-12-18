@@ -44,11 +44,13 @@ public class DesiaseFormulationServlet extends HttpServlet {
             if (desiase.size() != 0) {
                 req.setAttribute("desiases", desiase);
                 req.setAttribute("text", "По вашим симптомам найдены следующие лекарства");
+                req.setAttribute("error_drug", null);
                 getServletContext().getRequestDispatcher("/JSP/all_desiase.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("symptoms", symptomsDao.findAll());
+                req.setAttribute("error", "Никаких болезней по данным симптомам не найдено");
+                getServletContext().getRequestDispatcher("/JSP/desiaseformulation.jsp").forward(req, resp);
             }
-            req.setAttribute("symptoms", symptomsDao.findAll());
-            req.setAttribute("error", "Никаких болезней по данным симптомам не найдено");
-            getServletContext().getRequestDispatcher("/JSP/desiaseformulation.jsp").forward(req, resp);
         }
         else {
             req.setAttribute("symptoms", symptomsDao.findAll());

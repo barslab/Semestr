@@ -139,18 +139,18 @@ public class ProceduresDaoImpl implements ProceduresDao {
         }
     }
 
-    public void changeProcedures(int procedures_id, String new_name, String new_recommendation) {
+    public void changeProcedures(int procedures_id, String new_name, String new_recommendation) throws SQLException {
         String query = "UPDATE procedures SET recommendations=?, name=? where procedures_id=?";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, new_recommendation);
             preparedStatement.setString(2, new_name);
             preparedStatement.setInt(3, procedures_id);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при изменении рекомендации процедуры");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при изменении рекомендации процедуры");
+//            e.printStackTrace();
+//        }
     }
 }

@@ -22,21 +22,20 @@ public class DrugDeleteServlet extends HttpServlet {
         String[] path = req.getPathInfo().split("/");
         try {
             drug_id = Integer.parseInt(path[path.length - 1]);
+            if(drugDao.findDrug(drug_id)!=null) {
+                text = "Лекарство "+drugDao.findDrug(drug_id).getName()+" успешно удалена";
+                drugDao.deleteDrug(drug_id);
+                req.setAttribute("drugs", drugDao.findAll());
+                req.setAttribute("text", text);
+                getServletContext().getRequestDispatcher("/JSP/all_drug.jsp").forward(req, resp);
+            }
+            else {
+                req.setAttribute("error", "Некорректный id у лекарства");
+                getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
+            }
         }
         catch (NumberFormatException e) {
             getServletContext().getRequestDispatcher("/JSP/invalidaddress.jsp").forward(req, resp);
-        }
-        System.out.println(drug_id);
-        if(drugDao.findDrug(drug_id)!=null) {
-            text = "Лекарство "+drugDao.findDrug(drug_id).getName()+" успешно удалена";
-            drugDao.deleteDrug(drug_id);
-            req.setAttribute("drugs", drugDao.findAll());
-            req.setAttribute("text", text);
-            getServletContext().getRequestDispatcher("/JSP/all_drug.jsp").forward(req, resp);
-        }
-        else {
-            req.setAttribute("error", "Некорректный id у лекарства");
-            getServletContext().getRequestDispatcher("/JSP/invalidid.jsp").forward(req, resp);
         }
     }
     @Override

@@ -164,10 +164,10 @@ public class DesiaseDaoImpl implements DesiaseDao {
         }
     }
 
-    public void changeDesiase(Desiase desiase) {
+    public void changeDesiase(Desiase desiase) throws SQLException {
         String query = "UPDATE desiase SET name=?, chance_desiase_man=?, chance_desiase_women=?, average_age=? where desiase_id=?";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, desiase.getName());
             preparedStatement.setFloat(2, desiase.getChance_desiase_man());
@@ -175,9 +175,9 @@ public class DesiaseDaoImpl implements DesiaseDao {
             preparedStatement.setInt(4, desiase.getAverage_age());
             preparedStatement.setInt(5, desiase.getId());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Ошибка при изменении болезни");
-            e.printStackTrace();
-        }
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при изменении болезни");
+//            e.printStackTrace();
+//        }
     }
 }

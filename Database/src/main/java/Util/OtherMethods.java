@@ -14,7 +14,8 @@ public class OtherMethods {
     public OtherMethods(Connection connection) {
         this.connection = ConnectionFactory.getInstance().getConnection();
     }
-
+//   удаляет элементы списка2 из списка1
+//    используется при изменении модели, где что-то уже выбрано, а что-то нет
     public List<Integer> deleter(List<Integer> allId, List<Integer> deletingId, int own_id) {
         deletingId.add(own_id);
         for (int i=0; i<deletingId.size(); i++) {
@@ -28,6 +29,7 @@ public class OtherMethods {
         }
         return allId;
     }
+//    метод "сравнивает" симптомы у болезни и симптомы, которые выбрал лекарь при формировании
     public boolean check(int desiase_id, String[] symptoms_id) {
         SymptomsDaoImpl symptomsDao = new SymptomsDaoImpl(connection);
         HashSet<Integer> symptoms_ids = new HashSet<Integer>();

@@ -3,6 +3,7 @@ package servlets.procedures;
 import dao.ProceduresDaoImpl;
 import dao.SymptomsDaoImpl;
 import factories.ConnectionFactory;
+import models.Procedures;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ProcedureEditServlet extends HttpServlet {
     private int procedure_id;
@@ -39,10 +41,22 @@ public class ProcedureEditServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String name = req.getParameter("name");
-        String recommendations = req.getParameter("recommendations");
-        proceduresDao.changeProcedures(procedure_id, name, recommendations);
-        req.setAttribute("text", "Процедура успешно изменена");
-        req.setAttribute("procedures", proceduresDao.findAll());
-        getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
+        if(name.length()>45) {
+            req.setAttribute("error", "Название процедуры не может превышать 45 символов");
+            getServletContext().getRequestDispatcher("/JSP/edit_procedure.jsp").forward(req, resp);
+        }
+        else {
+            String recommendation = req.getParameter("recommendation");
+            try {
+                proceduresDao.changeProcedures(procedure_id, name, recommendation);
+                req.setAttribute("text", "Процедура успешно изменена");
+                req.setAttribute("procedures", proceduresDao.findAll());
+                getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                req.setAttribute("error", "Такая процедура уже существует");
+                req.setAttribute("procedures", proceduresDao.findProcedure(procedure_id));
+                getServletContext().getRequestDispatcher("/JSP/procedure_edit.jsp").forward(req, resp);
+            }
+        }
     }
 }

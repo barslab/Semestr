@@ -19,6 +19,7 @@ public class AllDesiaseServlet extends HttpServlet {
         DesiaseDaoImpl desiaseDao = new DesiaseDaoImpl(connection);
         req.setAttribute("desiases", desiaseDao.findAll());
         req.setAttribute("text", null);
+        req.setAttribute("error_drug", null);
         getServletContext().getRequestDispatcher("/JSP/all_desiase.jsp").forward(req, resp);
     }
     @Override

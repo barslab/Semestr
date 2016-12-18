@@ -26,15 +26,21 @@ public class ProcedureAddServlet extends HttpServlet {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         ProceduresDaoImpl proceduresDao = new ProceduresDaoImpl(connection);
         String name = req.getParameter("name");
-        String recommendation = req.getParameter("recommendation");
-        try {
-            proceduresDao.putProcedures(new Procedures(name, recommendation));
-        } catch (SQLException e) {
-            req.setAttribute("error", "Такая процедура уже существует");
+        if(name.length()>45) {
+            req.setAttribute("error", "Название процедуры не может превышать 45 символов");
             getServletContext().getRequestDispatcher("/JSP/procedure_add.jsp").forward(req, resp);
         }
-        req.setAttribute("text", "Процедура " + name + " успешно добавлена");
-        req.setAttribute("procedures", proceduresDao.findAll());
-        getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
+        else {
+            String recommendation = req.getParameter("recommendation");
+            try {
+                proceduresDao.putProcedures(new Procedures(name, recommendation));
+                req.setAttribute("text", "Процедура " + name + " успешно добавлена");
+                req.setAttribute("procedures", proceduresDao.findAll());
+                getServletContext().getRequestDispatcher("/JSP/all_procedure.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                req.setAttribute("error", "Такая процедура уже существует");
+                getServletContext().getRequestDispatcher("/JSP/procedure_add.jsp").forward(req, resp);
+            }
+        }
     }
 }

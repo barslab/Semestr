@@ -3,8 +3,6 @@ package dao;
 import factories.ConnectionFactory;
 import models.Drug;
 import models.Symptoms;
-import services.SubstitutesService;
-import services.SubstitutesServiceImpl;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -16,7 +14,7 @@ public class DrugDaoImpl implements DrugDao {
         this.connection = ConnectionFactory.getInstance().getConnection();
     }
     private SideEffectsDaoImpl sideEffectsDao = new SideEffectsDaoImpl(connection);
-    private SubstitutesService substitutesService = new SubstitutesServiceImpl();
+    private SubstitutesDaoImpl substitutesService = new SubstitutesDaoImpl(connection);
     public List<Drug> findAll() {
         Drug drug;
         List<Drug> drugs = new LinkedList<Drug>();
@@ -38,7 +36,7 @@ public class DrugDaoImpl implements DrugDao {
     public List<Drug> findDrugs(int desiase_id) {
         List<Drug> drugs = new LinkedList<Drug>();
         Statement statement=null;
-        String query="SELECT * FROM recomended_drug, drug WHERE desiase_id=? AND recomended_drug.drug_id=drug.drug_id";
+        String query="SELECT * FROM desiase_drugs WHERE desiase_id=?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement=connection.prepareStatement(query);
@@ -53,7 +51,6 @@ public class DrugDaoImpl implements DrugDao {
         }
         return drugs;
     }
-
     public List<Drug> findDrugs(List<Integer> ids) {
         List<Drug> drugs = new LinkedList<Drug>();
         for(int i=0; i<ids.size(); i++) {
@@ -64,7 +61,7 @@ public class DrugDaoImpl implements DrugDao {
 
     public List<Drug> findDrugsOfDrug(int drug_id) {
         List<Drug> drugs = new LinkedList<Drug>();
-        String query="SELECT * FROM substitutes, drug WHERE substitutes.drug_id=? AND substitutes.substitutes_drug_id=drug.drug_id";
+        String query="SELECT * FROM substitutes_drugs_view WHERE drug_id=?";
         PreparedStatement preparedStatement;
         try {
             preparedStatement=connection.prepareStatement(query);
@@ -209,10 +206,10 @@ public class DrugDaoImpl implements DrugDao {
         }
     }
 
-    public void changeDrug(Drug drug) {
+    public void changeDrug(Drug drug) throws SQLException {
         String query = "UPDATE drug SET name=?, quantity=?, form=?, contraindications=?, overdose=? where drug_id=?";
         PreparedStatement preparedStatement;
-        try {
+//        try {
             preparedStatement=connection.prepareStatement(query);
             preparedStatement.setString(1, drug.getName());
             preparedStatement.setInt(2, drug.getQuantity());
@@ -221,8 +218,37 @@ public class DrugDaoImpl implements DrugDao {
             preparedStatement.setString(5, drug.getOverdose());
             preparedStatement.setInt(6, drug.getId());
             preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println("Ошибка при изменении лекарства");
+//            e.printStackTrace();
+//        }
+    }
+
+    public void changeDrugQuantity(int drug_id, int new_quantity) {
+        String query = "UPDATE drug SET quantity=? where drug_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, new_quantity);
+            preparedStatement.setInt(2, drug_id);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Ошибка при изменении лекарства");
+            e.printStackTrace();
+        }
+    }
+
+    public void changeDrugQuantity(int desiase_id) {
+        String query="SELECT drug_id, quantity FROM recomended_drug WHERE desiase_id=?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setInt(1, desiase_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                 changeDrugQuantity(rs.getInt("drug_id"), rs.getInt("quantity")+findDrug(rs.getInt("drug_id")).getQuantity());
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
