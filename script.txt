@@ -262,6 +262,64 @@ ALTER FUNCTION public.symptoms_insert(character varying, character varying)
   OWNER TO postgres;
 
 
+CREATE OR REPLACE VIEW public.desiase_drugs AS 
+ SELECT drug.quantity,
+    drug.drug_id,
+    drug.name,
+    drug.form,
+    drug.contraindications,
+    drug.overdose,
+    recomended_drug.desiase_id
+   FROM recomended_drug,
+    drug
+  WHERE recomended_drug.drug_id = drug.drug_id;
+
+ALTER TABLE public.desiase_drugs
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE VIEW public.desiase_symptoms_view AS 
+ SELECT symptoms.symptoms_id,
+    symptoms.name,
+    symptoms.more_information,
+    symptoms_desiase.desiase_id
+   FROM symptoms,
+    symptoms_desiase
+  WHERE symptoms_desiase.symptoms_id = symptoms.symptoms_id;
+
+ALTER TABLE public.desiase_symptoms_view
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE VIEW public.side_effects_drug_view AS 
+ SELECT side_effects.side_effects_id,
+    side_effects.name
+   FROM side_effects,
+    drug_side
+  WHERE side_effects.side_effects_id = drug_side.side_effects_id;
+
+ALTER TABLE public.side_effects_drug_view
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE VIEW public.substitutes_drugs_view AS 
+ SELECT substitutes.substitutes_id,
+    substitutes.drug_id,
+    substitutes.substitutes_drug_id,
+    substitutes.distinction,
+    drug.name,
+    drug.quantity,
+    drug.form,
+    drug.contraindications,
+    drug.overdose
+   FROM substitutes,
+    drug
+  WHERE substitutes.substitutes_drug_id = drug.drug_id;
+
+ALTER TABLE public.substitutes_drugs_view
+  OWNER TO postgres;
+
+
 
 INSERT INTO desiase VALUES(1, 0.23, 0.11, 22, 'Грипп');
 INSERT INTO desiase VALUES(2, 0.23, 0.11, 56, 'Рак');
