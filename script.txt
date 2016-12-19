@@ -1,14 +1,6 @@
-CREATE DATABASE semestr
-  WITH OWNER = postgres
-       ENCODING = 'UTF8'
-       TABLESPACE = pg_default
-       LC_COLLATE = 'Russian_Russia.1251'
-       LC_CTYPE = 'Russian_Russia.1251'
-       CONNECTION LIMIT = -1;
-
 CREATE TABLE public.desiase
 (
-  desiase_id SERIAL PRIMARY KEY,
+  desiase_id SERIAL,
   chance_desiase_man numeric NOT NULL,
   chance_desiase_women numeric NOT NULL,
   average_age integer NOT NULL,
@@ -33,7 +25,7 @@ CREATE INDEX desiase_name
 
 CREATE TABLE public.drug
 (
-  drug_id SERIAL PRIMARY KEY,
+  drug_id SERIAL,
   name character varying(45) NOT NULL,
   quantity integer NOT NULL,
   form character varying(45) NOT NULL,
@@ -58,7 +50,7 @@ CREATE INDEX drug_name
 
 CREATE TABLE public.procedures
 (
-  procedures_id SERIAL PRIMARY KEY,
+  procedures_id SERIAL,
   name character varying(45) NOT NULL,
   recommendations text NOT NULL,
   CONSTRAINT procedures_pkey PRIMARY KEY (procedures_id),
@@ -72,7 +64,7 @@ ALTER TABLE public.procedures
 
 CREATE TABLE public.side_effects
 (
-  side_effects_id SERIAL PRIMARY KEY,
+  side_effects_id SERIAL,
   name text,
   CONSTRAINT side_effects_pkey PRIMARY KEY (side_effects_id)
 )
@@ -85,7 +77,7 @@ ALTER TABLE public.side_effects
 
 CREATE TABLE public.symptoms
 (
-  symptoms_id SERIAL PRIMARY KEY,
+  symptoms_id SERIAL,
   name character varying(45) NOT NULL,
   more_information text NOT NULL,
   CONSTRAINT symptoms_pkey PRIMARY KEY (symptoms_id),
@@ -105,7 +97,7 @@ CREATE INDEX symptoms_name
 
 CREATE TABLE public.symptoms_desiase
 (
-  id integer SERIAL PRIMARY KEY,
+  id SERIAL,
   desiase_id integer,
   symptoms_id integer,
   CONSTRAINT symptoms_desiase_pkey PRIMARY KEY (id),
@@ -125,7 +117,7 @@ ALTER TABLE public.symptoms_desiase
 
 CREATE TABLE public.substitutes
 (
-  substitutes_id SERIAL PRIMARY KEY,
+  substitutes_id SERIAL,
   drug_id integer,
   substitutes_drug_id integer,
   distinction character varying(45),
@@ -168,7 +160,7 @@ CREATE TABLE public.procedures_desiase
 (
   procedures_id integer,
   desiase_id integer,
-  procedures_desiase_id SERIAL PRIMARY KEY,
+  procedures_desiase_id SERIAL,
   CONSTRAINT procedures_desiase_pkey PRIMARY KEY (procedures_desiase_id),
   CONSTRAINT desiase_fkey FOREIGN KEY (desiase_id)
       REFERENCES public.desiase (desiase_id) MATCH SIMPLE
@@ -189,7 +181,7 @@ CREATE TABLE public.recomended_drug
   quantity integer NOT NULL,
   drug_id integer,
   desiase_id integer,
-  recomended_drugs_id SERIAL PRIMARY KEY,
+  recomended_drugs_id SERIAL,
   CONSTRAINT recomended_drug_pkey PRIMARY KEY (recomended_drugs_id),
   CONSTRAINT desiase_fkey FOREIGN KEY (desiase_id)
       REFERENCES public.desiase (desiase_id) MATCH SIMPLE
@@ -294,8 +286,8 @@ INSERT INTO symptoms VALUES(2, 'сыпь','красная сыпь вокруг шеи');
 INSERT INTO symptoms VALUES(3, 'усталость','сильная усталость');
 
 
+INSERT INTO drug_side VALUES(2, 1);
 INSERT INTO drug_side VALUES(2, 2);
-INSERT INTO drug_side VALUES(2, 3);
 
 INSERT INTO recomended_drug VALUES(2, 1, 1, 1);
 INSERT INTO recomended_drug VALUES(3, 2, 1, 2);
